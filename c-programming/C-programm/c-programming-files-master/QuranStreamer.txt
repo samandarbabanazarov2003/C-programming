@@ -1,0 +1,113 @@
+using NAudio.Wave;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MergeAudio
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //List<string> file = new List<string>();
+
+            WebClient client = new WebClient();
+            Uri ur = new Uri("http://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1");
+            client.DownloadProgressChanged += WebClientDownloadProgressChanged;
+            client.DownloadDataCompleted += WebClientDownloadCompleted;
+
+            ////file.Add(client.DownloadString(ur));
+            ////file.Add(client.DownloadString(ur));
+            //string file = client.DownloadString(ur);
+            //Mp3FileReader reader = new Mp3FileReader(file);
+            //if ( (reader.Id3v2Tag != null))
+            //{
+            //    //output.Write(reader.Id3v2Tag.RawData, 0, reader.Id3v2Tag.RawData.Length);
+            //}
+
+            //Stream s = null;
+            ////Combine(file, s);
+
+            int i = 1;
+            while(i<8)
+            PlayMp3FromUrl("http://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/" + 262);
+
+
+
+
+            Console.Read();
+
+
+
+        }
+
+        public static void PlayMp3FromUrl(string url)
+        {
+            using (Stream ms = new MemoryStream())
+            {
+                using (Stream stream = WebRequest.Create(url)
+                    .GetResponse().GetResponseStream())
+                {
+                    byte[] buffer = new byte[32768/32];
+                    int read;
+                    while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        ms.Write(buffer, 0, read);
+                    }
+                }
+
+                ms.Position = 0;
+                using (WaveStream blockAlignedStream =
+                    new BlockAlignReductionStream(
+                        WaveFormatConversionStream.CreatePcmStream(
+                            new Mp3FileReader(ms))))
+                {
+                    using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
+                    {
+                        waveOut.Init(blockAlignedStream);
+                        waveOut.Play();
+                        while (waveOut.PlaybackState == PlaybackState.Playing)
+                        {
+                            System.Threading.Thread.Sleep(0);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void WebClientDownloadCompleted(object sender, DownloadDataCompletedEventArgs e)
+        {
+            Console.WriteLine("Download status: {0}%.", e.UserState);
+        }
+
+        private static void WebClientDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            Console.WriteLine("Download finished!");
+        }
+
+
+
+        public static void Combine(List<string> inputFiles, Stream output)
+        {
+            foreach (string file in inputFiles)
+            {
+                Console.WriteLine(file);
+                Mp3FileReader reader = new Mp3FileReader(file);
+                if ((output.Position == 0) && (reader.Id3v2Tag != null))
+                {
+                    output.Write(reader.Id3v2Tag.RawData, 0, reader.Id3v2Tag.RawData.Length);
+                }
+                Mp3Frame frame;
+                while ((frame = reader.ReadNextFrame()) != null)
+                {
+                    output.Write(frame.RawData, 0, frame.RawData.Length);
+                }
+            }
+        }
+
+    }
+}

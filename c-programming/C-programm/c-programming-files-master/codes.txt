@@ -1,0 +1,157 @@
+2-3-1
+#include <stdio.h>
+#include <conio.h>
+
+int main(){
+
+	int mm=0, dd=0;
+	printf("Enter month: ");
+	scanf("%d", &mm);
+	
+	printf("Enter date: ");
+	scanf("%d", &dd);
+
+	printf("\nBirthdate is %d - %d (mm-dd)",mm, dd);
+
+	getch();
+    return 0;
+
+}
+
+******************
+2-3-2
+#include <stdio.h>
+#include <conio.h>
+
+int main(){
+
+	int mm=0, dd=0;
+	printf("Enter month and date: ");
+	scanf("%d %d", &mm, &dd);
+
+	printf("\nBirthdate is %d - %d (mm-dd)",mm, dd);
+
+	getch();
+    return 0;
+
+}
+
+*********************
+
+#include <stdio.h>
+#include <conio.h>
+
+int main(){
+
+	int mm=0, dd=0;
+	printf("Monday Tuesday Wednesday Thursday Friday Saturday \n");
+	
+	printf("5	6	 7	 8	 9	 10 ");
+
+	getch();
+    return 0;
+
+}
+
+********************
+//Multiplication Table
+#include <stdio.h>
+#include <conio.h>
+
+int main(){
+
+	int number=0;
+   // read number from user
+	printf("Enter an integer: ");  
+	scanf("%d ",&number);
+
+	// print table
+	printf("%d * %d = %d \n",number,1,number*1);
+	printf("%d * %d = %d \n",number,1,number*2);
+	printf("%d * %d = %d \n",number,1,number*3);
+	printf("%d * %d = %d \n",number,1,number*4);
+	printf("%d * %d = %d \n",number,1,number*5);
+	printf("%d * %d = %d \n",number,1,number*6);
+	printf("%d * %d = %d \n",number,1,number*7);
+	printf("%d * %d = %d \n",number,1,number*8);
+	printf("%d * %d = %d \n",number,1,number*9);
+	printf("%d * %d = %d \n",number,1,number*10);
+
+	getch();
+    return 0;
+
+}
+
+*******************
+
+//Print out factorials up to 5.
+#include <stdio.h>
+#include <conio.h>
+
+int main(){
+
+	int number=1;
+
+	// print table
+	printf("%d! = %d\n",1,1);
+	
+	printf("%d! = %d\n",2,2*1);
+	
+	printf("%d! = %d\n",3,3*2*1);
+	
+	printf("%d! = %d\n",4,4*3*2*1);
+
+	printf("%d! = %d\n",5,5*4*3*2*1);
+
+	getch();
+    return 0;
+
+}
+*********************
+//Fibonacci Series
+#include <stdio.h>
+#include <conio.h>
+
+int main(){
+
+	int a=1, b=1, c=0;
+
+	// print series
+	printf("%d	\n",a);
+	printf("%d	\n",b);
+
+	c=a+b;
+	printf("%d	\n",c);
+
+	//update values of previous two numbers;
+	a=b;
+	b=c;
+	c=a+b;
+	printf("%d	\n",c);
+
+	a=b;
+	b=c;
+	c=a+b;
+	printf("%d	\n",c);
+
+	a=b;
+	b=c;
+	c=a+b;
+	printf("%d	\n",c);
+
+
+	a=b;
+	b=c;
+	c=a+b;
+	printf("%d	\n",c);
+
+	a=b;
+	b=c;
+	c=a+b;
+	printf("%d	\n",c);
+
+	getch();
+    return 0;
+
+}
+
